@@ -1,0 +1,54 @@
+select * from postac;
+-- use information_schema; -- pokazuje tabele 
+# rózne sposoby komentarzy
+/*zadanie 1 select*/
+-- select ...
+#Ctrl +/- dodanie komentarza 
+# Ctrl + d - duplikacja lijniki
+#Lab4 zadanie 1a
+select * from postac where nazwa !='Bjorn' and rodzaj= 'wiking';
+select * from postac order by data_ur ASC limit 2;
+delete from postac where id_postaci=3;
+select * from przetwory;
+delete from przetwory where id_przetworu=1;
+
+#lab 4, zadanie 1b
+alter table postac drop primary key;
+#problem 1 - istniejące klucze obce do tej kolumny
+#tabela przetwory, walizka, ewentualnie izba 
+# usuwanie kluczy obcych 
+alter table przetwory drop foreign key przetwory_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table izba drop foreign key izba_ibfk_1;
+# aby sprawdzić nazwy kluczy obcych
+show create table przetwory;
+# problem 2 - atrybut auto_increment 
+alter table postac modify id_postaci int;
+# drop primary key powinien zadziałać 
+alter table postac drop primary key;
+#lab4 , zad.2 a
+#first - wstawimy kolumnę jako pierwszą w tabeli 
+alter table postac add pesel char(11) first;
+alter table postac add primary key(pesel);
+update postac set pesel='12344324302' + id_postaci;
+select * from postac;
+
+#lab4, zad.2b
+-- alter table postac change rodzaj where enum
+
+#lab4, zad.2c
+-- insert into... 
+
+#lab4, zad.3a
+select nazwa from postac where nazwa LIKE 't%';
+-- select nazwa from statek='Statek Bjorna' where nazwa LIKE 'a%';
+# równoważne wyrażenia regularne 
+select nazwa from postac where nazwa regexp '[a]';
+-- select nazwa from postac where nazwa regexp '[_j%]';
+-- select nazwa from postac where nazwa regexp '[a$]';
+#lab4, zad.2b
+update statek set max_ladownosc=max_ladowanosc*0.7 where data_wodowania>'1901-01-01' and data_wodowania<='2000-12-31';
+# lub 
+-- where year(data_wodowania) between 1901 and 2000
+select year(data_ur) from postac;
