@@ -52,3 +52,26 @@ update statek set max_ladownosc=max_ladowanosc*0.7 where data_wodowania>'1901-01
 # lub 
 -- where year(data_wodowania) between 1901 and 2000
 select year(data_ur) from postac;
+
+#LAB4 zad.4 a
+#ALTER TABLE... -> dodanie wartosći 'wąż' w kolumnie rodzaj w tabeli postać
+ALTER TABLE postac modify rodzaj enum('wiking','ptak','kobieta','waz');
+
+#ISERT INTO postac values('122332431',default,'LOKO','waz',ekwipunekidEkwipunkuekwipunek
+select*from postac;
+show create table postac;
+#lab4 zad.4 b
+# opcja 1- like(przeniesie klucz głowny), tylko struktura 
+create table marynarz like postac; 
+#dodanie danych
+INSERT INTO marynarz select * from postac;
+#opcja 2- create [AS] select, struktura + dane (bez klucza)
+create table marynarz select * from postac;
+#lab4 zad.4 c
+
+#lab4 zad.5 a
+#f
+insert into zwierz select id_postaci, nazwa, wiek from
+#postac where rodzaj='wąż' or rodzaj ='ptak'; lub 
+postac where rodzaj in ('wąż','ptak');
+
