@@ -1,0 +1,21 @@
+#SELECT * FROM wikingowie.zaso
+#lab5 zad.1 
+# a 
+create table kreatura;
+select * from wikingowie.kreatura;
+#jezeli aktywna baza to wikingowie 
+create table browarekk.kreatura;
+select * from kreatura;
+#lab5.zad 1
+#a
+create table kreatura select * from wikingowie.kreatura;
+create table zasob select * from wikingowie.zasob;
+create table ekwipunek select * from wikingowie.ekwipunek;
+select * from kreatura;
+# operator "różny od"
+#! lub <>
+
+#do zadania 2 zrobic 
+#zajecia 25.11.2022 (169223)
+#moja nazwa usera w serwisie github: Kacbrow
+#Setting ->collaborators->add people termin do kolejnych zajec
