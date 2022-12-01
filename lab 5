@@ -6,8 +6,8 @@ select * from wikingowie.kreatura;
 #jezeli aktywna baza to wikingowie 
 create table browarekk.kreatura;
 select * from kreatura;
-#lab5.zad 1
-#a
+
+#lab5 zad.1.1
 create table kreatura select * from wikingowie.kreatura;
 create table zasob select * from wikingowie.zasob;
 create table ekwipunek select * from wikingowie.ekwipunek;
