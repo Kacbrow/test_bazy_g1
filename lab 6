@@ -1,0 +1,54 @@
+#lab6 
+#zad.1.1
+select sum(udzwig) from kreatura;
+select avg(udzwig) from kreatura; #średnia
+select max(udzwig) from kreatura;
+select min(udzwig) from kreatura;
+select count(nazwa) from kreatura; # ilość rekordów
+select count(*) from kreatura;
+#zad.1.1
+select avg(waga) from kreatura where rodzaj='wiking';
+#zad.1.2
+select rodzaj, avg(waga), count(*) from kreatura group by rodzaj;
+#zad.1.3
+select rodzaj, avg(wiek) , count(*) from kreatura where year(dataUr);
+select avg(2022-year(dataUr)) as wiek from kreatura group by rodzaj;
+select rodzaj,avg(year(now())-year(dataUr)) as wiek from kreatura group by rodzaj;
+#zad.2.1
+select rodzaj, sum(waga*ilosc) from wikingowie.zasob group by  rodzaj;
+select nazwa,rodzaj, sum(waga*ilosc) from wikingowie.zasob group by nazwa, rodzaj;
+select nazwa,rodzaj, sum(waga*ilosc) from wikingowie.zasob group by nazwa, rodzaj with rollup order by rodzaj;
+select year(dataPozyskania), AS rok, month(dataPozyskania) as miesiac, count(*) from wikingowie.zasob group by rok, miesiac with rollup;
+#np;
+#having  flitr dla kolumn agregowanych po agregacji
+select rodzaj, count(nazwa) from kreatura group by rodzaj  having count(nazwa)>1;
+#zad.2.2
+select nazwa, count(waga) from wikingowie.zasob group by  nazwa having ilosc>=4 and sum(waga)>10; #błąd 
+select nazwa,avg(waga) from wikingowie.zasob where ilosc >=4 group by nazwa having avg(waga)>10; # 1 wersja
+select * from wikingowie.zasob order by waga;
+select nazwa,avg(waga) from wikingowie.zasob group by nazwa having avg(waga)>10 and sum(ilosc>=4);
+# 
+select nazwa,avg(waga), sum(ilosc) from wikingowie.zasob group by nazwa;
+#zad.2.3
+select rodzaj ,avg(nazwa) from wikingowie.zasob
+select rodzaj, count(nazwa) from wikingowie.zasob where ilosc >1 group by rodzaj; #cos nie tak powinno byc
+#lub
+select rodzaj, nazwa,count(nazwa) from wikingowie.zasob group by rodzzaj, nazwa having sum(ilosc) > 1; # cos nie działa
+#
+select count(*) from wikingowie.zasob where rodzaj='jedzenie';
+select nazwa, ilosc from wikingowie.zasob where rodzaj='jedzenie';
+#
+#zad.3 
+#złączenie tabel
+select  * from kreatura, ekwipunek where kreatura.idKreatury=ekwipunek.idKreatury;
+# równoważenie
+select  * from kreatura inner join  ekwipunek on kreatura.idKreatury=ekwipunek.idKreatury;
+#zad.3.1
+#nie działa 
+select  k.nazwa, e.ilosc, z.nazwa from kreatura k inner join  ekwipunek e inner join wikingowie.zasob z on z.idZasobu=e.idZasobu  on kreatura.idKreatury=ekwipunek.idKreatury; # nie działa 
+#zad.3.2
+# left join
+select * from kreatura k left join ekwipunek e on k.idKreatury=e.idKreatury where  e.idEkwipunku is null;
+#podzapytanie  #nie działa narazie 
+select  idKreatury from kretura where idKreatury not in (select distinct idKreatury from ekwipunek where idKreatury );
+ #dokoncz zad 4 punkt 1,2
