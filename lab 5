@@ -33,5 +33,38 @@ SELECT * FROM zasob WHERE waga BETWEEN 2 AND 5;
 #lab5 zad.2.3
 SELECT * FROM kreatura WHERE nazwa LIKE '%or%' AND udzwig BETWEEN 30 AND 70;
 
+#lab5 zad.3.1
+select dataPozyskania from wikingowie.zasob;
+select dataPozyskania ,year(dataPozyskania), month(dataPozyskania), day(dataPozyskania) from wikingowie.zasob;
+select *from wikingowie.zasob where month (dataPozyskania) in (7,8);
+#lab5 zad.3.2
+select rodzaj from wikingowie.zasob;
+select * from wikingowie.zasob where rodzaj is not null order by waga ASC;
+# order by wiek ASC, rodzaj DESC;
+#LUB 
+# order by 1 ASC, 2 DESC;
+#lab5 zad.3.3
+# select * from wikingowie.kreatura order by daraUr;
+select * from kreatura order by dataUr ASC limit 5;
+# select * from kreatura order by dataUr limit 5,5;
+
+#lab5 zad.4.1
+select rodzaj from wikingowie.zasob;
+select distinct nazwa, dataPozyskania from wikingowie.zasob;
+select distinct (rodzaj) from wikingowie.zasob;
+#lab5 zad.4.2
+# select rodzaj from kreatura where rodzaj regexp '^wi';
+# select rodzaj from kreatura where rodzaj LIKE 'wi%';
+#funkcja concat()
+select concat(nazwa,rodzaj) from kreatura;
+select concat("Nazywam się",nazwa) from kreatura;
+#lab5 zad.4.3
+select nazwa, ilosc * waga, dataPozyskania from wikingowie.zasob where year (dataPozyskania) between 2000 and 2007;
+
+#lab5 zad.5.1
+select nazwa, (ilosc*waga)*0.7 as waga_netto, (ilosc*waga)*0.3 as odpadki from wikingowie.zasob where rodzaj='jedzenie';
+#lab5 zad.5.2
+select * from wikingowie.zasob where rodzaj is not null;
+
 #do zadania 2 zrobic 
 #zajecia 25.11.2022 (169223)
