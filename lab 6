@@ -51,4 +51,8 @@ select  k.nazwa, e.ilosc, z.nazwa from kreatura k inner join  ekwipunek e inner 
 select * from kreatura k left join ekwipunek e on k.idKreatury=e.idKreatury where  e.idEkwipunku is null;
 #podzapytanie  #nie działa narazie 
 select  idKreatury from kretura where idKreatury not in (select distinct idKreatury from ekwipunek where idKreatury );
- #dokoncz zad 4 punkt 1,2
+# zad 4 
+#zad.4.1
+select  k.nazwa,z.nazwa, dataUr from wikingowie.zasob z inner join  wikingowie.kreatura k inner join wikingowie.ekwipunek  on wikingowie.ekwipunek.idKreatury=k.idKreatury  on wikingowie.ekwipunek.idZasobu=z.idZasobu where dataUr like '167%';
+#zad.4.2
+select  dataUr,k.nazwa,z.rodzaj from wikingowie.kreatura k inner join  wikingowie.ekwipunek e inner join wikingowie.zasob z on z.idZasobu=e.idZasobu  on k.idKreatury=e.idKreatury where z.rodzaj='jedzenie' order by dataUr ASC limit 5;
