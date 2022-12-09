@@ -56,3 +56,53 @@ select  idKreatury from kretura where idKreatury not in (select distinct idKreat
 select  k.nazwa,z.nazwa, dataUr from wikingowie.zasob z inner join  wikingowie.kreatura k inner join wikingowie.ekwipunek  on wikingowie.ekwipunek.idKreatury=k.idKreatury  on wikingowie.ekwipunek.idZasobu=z.idZasobu where dataUr like '167%';
 #zad.4.2
 select  dataUr,k.nazwa,z.rodzaj from wikingowie.kreatura k inner join  wikingowie.ekwipunek e inner join wikingowie.zasob z on z.idZasobu=e.idZasobu  on k.idKreatury=e.idKreatury where z.rodzaj='jedzenie' order by dataUr ASC limit 5;
+
+#zad.4.1.
+# select * from kreatura natural join ekwipunek natural join wikingowie.zasob;
+select  k.nazwa,z.nazwa, dataUr from wikingowie.zasob z inner join  wikingowie.kreatura k inner join wikingowie.ekwipunek  on wikingowie.ekwipunek.idKreatury=k.idKreatury  on wikingowie.ekwipunek.idZasobu=z.idZasobu where dataUr like '167%';
+#zad.4.2.
+select * from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu;
+select * from wikingowie.kreatura;
+select  dataUr,k.nazwa,z.rodzaj from wikingowie.kreatura k inner join  wikingowie.ekwipunek e inner join wikingowie.zasob z on z.idZasobu=e.idZasobu  on k.idKreatury=e.idKreatury where z.rodzaj='jedzenie' order by dataUr ASC limit 5;
+#zad.4.3
+# concat()- łączenie ze sobą  kolum 
+select concat(k1.nazwa,' ',k2.nazwa) from kreatura k1 join kreatura k2 on k1.idKreatury=k2.idKreatury;
+#zad.5.1
+#np:
+select k.nazwa, z.nazwa, e.ilosc, z.waga, sum(e.ilosc*z.waga) as waga_razem from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu group by k.nazwa;
+select k.nazwa, avg(e.ilosc*z.waga) as waga_razem from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu group by k.nazwa ;
+select k.nazwa, z.nazwa, e.ilosc, z.waga, e.ilosc*z.waga as waga_razem from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu;
+select k.nazwa,sum(e.ilosc*z.waga) as waga_razem, avg(e.ilosc*z.waga),count(*) from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu group by k.nazwa;
+select * from ekwipunek where ekwipunek.idKreatury;
+# 
+select k.rodzaj, sum(e.ilosc*z.waga) as waga_razem, sum(e.ilosc*z.waga)/count(distinct(k.nazwa)), count(k.nazwa), count(distinct(k.nazwa)) from kreatura k join ekwipunek e 
+on k.idKreatury=e.idKreatury join wikingowie.zasob z on e.idZasobu=z.idZasobu where k.rodzaj not in('malpa','waz') group by k.rodzaj ;
+# rozwiazanie 1
+select k.rodzaj, sum(e.ilosc*z.waga)/count(distinct(k.nazwa)) as srednia_razem from kreatura k join ekwipunek e on k.idKreatury=e.idKreatury join wikingowie.zasob z 
+on e.idZasobu=z.idZasobu where k.rodzaj not in('malpa','waz') group by k.rodzaj ;
+
+#zad.5.2
+#1sposob
+select k.nazwa, max(k.dataUr), min(k.dataUr) from kreatura k  group by k.rodzaj;
+
+select k.rodzaj, count(*) from kreatura k group by k.rodzaj;
+
+#2 sposob użycie union 
+select k.nazwa from kreatura k where k.rodzaj='wiking' union select k.nazwa from kreatura k where k.rodzaj='ryba';
+
+
+select count(*) from kreatura where rodzaj='wiking';
+select 209.90/9;
+
+
+#wejs3
+#wersja 2
+# 1
+# select  concat (imie,' ',nazwisko) from ...  2022-year (dataUrodzenia) lub year (now())-year(dataUrodzenia) lub year (curdate())-year(dataUrodzenia)
+# 2
+# create table studenci_top_5 select (4 kolumny) from student order by iloscPunktow DESC limit 5;
+# 3 
+# select distinct(imie) from student;
+# select distinct imie from student;
+
+
