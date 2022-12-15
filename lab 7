@@ -7,5 +7,13 @@ select id_uczestnika from wikingowie.uczestnicy;
 select * from wikingowie.uczestnicy u left join kreatura k on u.id_uczestnika=k.idKreatury; # zadziała jak trochę inner join 
 select * from kreatura k left join wikingowie.uczestnicy u on u.id_uczestnika=k.idKreatury where u.id_uczestnika is null; # where u.id_uczestnika- gdzie  nie ma 
 
+#zad.1.2
+select k.nazwa, k.idKreatury, u.id_uczestnika 
+from wikingowie.kreatura k
+left join  wikingowie.uczestnicy u ON k.idKreatury=u.id_uczestnika
+where u.id_uczestnika is null;
 #zad.1.3
-select w.nazwa, sum(e.ilosc) from wikingowie.wyprawa w inner join wikingowie.uczestnicy u on w.id_wyprawy=u.id_wyprawy inner join ekwipunek e on u.id_uczestnika=e.idKreatury group by w.id_wyprawy;
+SELECT w.nazwa, sum(e.ilosc) FROM wikingowie.wyprawa w
+inner join wikingowie.uczestnicy u ON w.id_wyprawy=u.id_wyprawy
+inner join wikingowie.ekwipunek e ON u.id_uczestnika=e.idKreatury
+group by w.id_wyprawy;
