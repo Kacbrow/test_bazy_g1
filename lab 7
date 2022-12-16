@@ -18,7 +18,40 @@ inner join wikingowie.uczestnicy u ON w.id_wyprawy=u.id_wyprawy
 inner join wikingowie.ekwipunek e ON u.id_uczestnika=e.idKreatury
 group by w.id_wyprawy;
 
+#zad.2.1
+# to jest poprawne 
+select w.nazwa, count(u.id_uczestnika), group_concat(k.nazwa separator '|') from wikingowie.wyprawa w join wikingowie.uczestnicy u on 
+u.id_wyprawy=w.id_wyprawy join wikingowie.kreatura k on k.idKreatury=u.id_uczestnika group by w.id_wyprawy;
+# 
+select w.nazwa, u.id_uczestnika, k.nazwa from wikingowie.wyprawa w join wikingowie.uczestnicy u on 
+u.id_wyprawy=w.id_wyprawy join wikingowie.kreatura k on k.idKreatury=u.id_uczestnika;
 
+
+#zad.2.2
+select * from wikingowie.etapy_wyprawy;
+select * from  etapy_wyprawy ew join sektor s on ew.sektor=s.id_sektora join wikingowie.wyprawa w on  k.id_wyprawy=ew.idWyprawy 
+join wikingowie.kreatura k on k.idKreatury=w.kierownik;
+
+#
+# select w.nazwa, w.data_rozpoczecia, k.nazwa as kierownik, ew.kolejnosc, s.nazwa from etapy_wyprawy ew join sektor s on ew.sektor=s.id_sektora join wyprawa w on 
+
+# zad.3.1
+select count(id_sektora ) from sektor;
+select count(distinct sektor) from wikingowie.etapy_wyprawy;
+
+select nazwa, ifnull(waga, 'bez wagi') from wikingowie.kreatura;
+select nazwa, if(waga is null , 'bez wagi', waga) from wikingowie.kreatura;
+select * from wikingowie.wyprawa;
+#zad.3.2
+select nazwa, if(sum(ilosc), 'brał udział w wyprawie') 
+from wikingowie.kreatura ;
+
+#zad.3.1
+select s.nazwa, count(ew.sektor) as ile_odwiedzin from wikingowie.sektor s inner join  wikingowie.etapy_wyprawy ew on s.id_sektora=ew.sektor group by s.id_sektora;
+#zad.3.2
+select k.nazwa, if(count(u.id_uczestnika)>0, 'bral udział', 'nie bral udzialu') bral_czy_nie from wikingowie.kreatura k inner join wikingowie.uczestnicy u on k.idKreatury=u.id_uczestnika group by k.idKreatury; 
+
+select * from wikingowie.uczestnicy;
 
 
 # wejsciowka 
