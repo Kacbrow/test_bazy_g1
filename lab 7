@@ -17,3 +17,16 @@ SELECT w.nazwa, sum(e.ilosc) FROM wikingowie.wyprawa w
 inner join wikingowie.uczestnicy u ON w.id_wyprawy=u.id_wyprawy
 inner join wikingowie.ekwipunek e ON u.id_uczestnika=e.idKreatury
 group by w.id_wyprawy;
+
+
+
+
+# wejsciowka 
+# gr.4
+# zad.1
+ select s.imie, s.nazwisko, sum(w.iloscPunktow) from student  s inner join wyniki w on s.idStudenta=w.idStudenta  where 2022-year(student.dataUrodzenia) between 20 and 29 group by s.idStudenta;
+#zad.2
+ select count(distinct dyscyplina) from wyniki;
+ select count(distinct (dyscyplina)) from wyniki;
+#zad.3
+ select s.imie, s.nazwisko from student s inner join wyniki w on s.idStudenta=w.idStudenta order by sum(iloscPunktow) desc limit 3;
