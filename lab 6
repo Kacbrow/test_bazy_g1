@@ -94,6 +94,11 @@ select k.nazwa from kreatura k where k.rodzaj='wiking' union select k.nazwa from
 select count(*) from kreatura where rodzaj='wiking';
 select 209.90/9;
 
+#zad.5.3
+select 'najmlodsza',a.maxData, b.nazwa, a.rodzaj from (select max(dataUr) maxData, rodzaj  from kreatura group by rodzaj) a, (select nazwa, dataUr from kreatura) b where a.minData=b.dataUr;
+# 2 wersja
+select a.nazwa, a.rodzaj, a.dataUr from kreatura a, (select min(dataUr) min, max(dataUr) max from kreatura group by rodzaj) b where b.min=a.dataUr or b.max=a.dataUr;
+
 
 #wejs3
 #wersja 2
