@@ -1,0 +1,67 @@
+#firma_zti 
+#zad.2.1
+select pracownik.imie, pracownik.nazwisko,dzial.nazwa from dzial inner join pracownik on pracownik.dzial = dzial.id_dzialu;
+#zad.2.2
+Select t.nazwa_towaru, k.nazwa_kategori, sm.ilosc from towar t join kategoria k on t.kategoria=k.id_kategori join 
+stan_magazynowy sm on t.id_towaru=sm.towar order by ilosc desc;
+#tak samo 
+select nazwa_towaru, nazwa_kategori, ilosc from towar t join kategoria k on k.id_kategori=t.kategoria join 
+stan_magazynowy s on t.id_towaru=s.towar order by ilosc desc 
+#zad.2.3
+SELECT * FROM zamowienie z JOIN status_zamowienia sz ON z.status_zamowienia=sz.id_statusu_zamowienia ;
+SELECT * FROM zamowienie z JOIN status_zamowienia sz ON z.status_zamowienia=sz.id_statusu_zamowienia WHERE sz.nazwa_statusu_zamowienia="anulowane";
+#zad.2.4
+SELECT * FROM klient k JOIN adres_klienta ak ON k.id_klienta=ak.klient join typ_adresu ta ON ta.id_typu=ak.typ_adresu WHERE miejscowosc="Olsztyn" AND ta.id_typu=1;
+select * from klient inner join adres_klienta on klient.id_klienta = adres_klienta.klient where adres_klienta.miejscowosc = "Olsztyn" and adres_klienta.typ_adresu = 1;
+#zad.2.5
+Select jm.nazwa from jednostka_miary jm left join stan_magazynowy sm on jm.id_jednostki=sm.jm where towar is null;
+# zadanie 5, podzapytanie
+select id_jednostki, nazwa from jednostka_miary where id_jednostki not in (select distinct jm from stan_magazynowy);
+# left join - tu ważna jest kolejność tabel
+Select distinct jm.id_jednostki, sm.jm from jednostka_miary jm left join stan_magazynowy sm on jm.id_jednostki=sm.jm where towar is null;
+#zad.2.6
+#za tydzien moze byc wejsciowka w formie formularza
+select  z.numer_zamowienia, t.nazwa_towaru, z.status_zamowienia,t.cena_zakupu from zamowienie z join pozycja_zamowienia pz on z.id_zamowienia=pz.zamowienie year='2018';
+Select z.numer_zamowienia, z.data_zamowienia, t.nazwa_towaru, pz.ilosc, pz.cena from zamowienie z join pozycja_zamowienia pz on z.id_zamowienia=pz.zamowienie 
+join towar t on pz.towar=t.id_towaru where z.data_zamowienia between '2018-01-01' and '2018-12-31';
+SELECT z.numer_zamowienia, t.nazwa_towaru, pz.ilosc, pz.cena FROM zamowienie z JOIN pozycja_zamowienia pz ON pz.zamowienie=z.id_zamowienia JOIN 
+towar t ON t.id_towaru=pz.towar WHERE z.numer_zamowienia LIKE '%2018';
+SELECT z.numer_zamowienia, t.nazwa_towaru,pz.ilosc, pz.cena FROM zamowienie z JOIN pozycja_zamowienia pz
+ON pz.zamowienie=z.id_zamowienia JOIN towar t ON t.id_towaru=pz.towar WHERE year(z.data_zamowienia)=2018;
+select zamowienie.numer_zamowienia, towar.nazwa_towaru ,pozycja_zamowienia.ilosc,pozycja_zamowienia.cena from zamowienie
+inner join pozycja_zamowienia on pozycja_zamowienia.zamowienie = zamowienie.id_zamowienia
+inner join towar on pozycja_zamowienia.towar = towar.id_towaru
+where year(zamowienie.data_zamowienia)=2018;
+#zad.2.7
+CREATE TABLE towary_full_info (SELECT t.nazwa_towaru, t.cena_zakupu, k.id_kategori as 'nazwa',sm.ilosc, sm.jm FROM firma_zti.towar t JOIN firma_zti.kategoria k
+ON k.id_kategori=t.kategoria JOIN firma_zti.stan_magazynowy sm ON sm.towar=t.id_towaru);
+CREATE TABLE towary_full_info
+(SELECT t.nazwa_towaru, t.cena_zakupu, 
+k.nazwa_kategori as 'nazwa kategori',sm.ilosc, smi.nazwa
+FROM __firma_zti.towar t
+JOIN __firma_zti.kategoria k
+ON k.id_kategori=t.kategoria JOIN 
+__firma_zti.stan_magazynowy sm 
+ON sm.towar=t.id_towaru 
+JOIN __firma_zti.jednostka_miary smi
+ON smi.id_jednostki=sm.jm);
+#zad.2.8
+select * from pozycja_zamowienia inner join zamowienie on pozycja_zamowienia.zamowienie = zamowienie.id_zamowienia order by zamowienie.data_zamowienia asc limit 5;
+SELECT *, pz.id_pozycji FROM zamowienie z INNER JOIN pozycja_zamowienia pz ON pz.zamowienie=z.id_zamowienia ORDER BY data_zamowienia ASC LIMIT 5;
+select * from zamowienie order by data_zamowienia asc limit 5;
+select * from zamowienie z inner join (select * from pozycja_zamowienia) as pz on z.id_zamowienia=pz.zamowienie order by data_zamowienia asc limit 5;
+#prawidłowe 1 rozwiazanie 
+select * from pozycja_zamowienia pz inner join (select * from zamowienie order by data_zamowienia asc limit 5) as z on z.id_zamowienia=pz.zamowienie;
+#zad.2.9
+SELECT * FROM zamowienie WHERE status_zamowienia NOT IN (5);
+Select * from zamowienie z join status_zamowienia sz on z.status_zamowienia=sz.id_statusu_zamowienia where sz.nazwa_statusu_zamowienia != 'zrealizowane';
+#zad.2.10
+select distinct kod from adres_klienta where kod not like '__-___'; 
+select distinct kod from adres_klienta where kod not regexp '[0-9][0-9]-[0-9][0-9][0-9]'; 
+select distinct kod from adres_klienta where kod not regexp '[0-9]{2}-[0-9]{3}'; 
+
+
+#{n} - dokładnie n razy 
+#{n,} - co najmnije n razy 
+#{,n} - co najwyżej n razy
+#{n,m} - co najmniej n razy i nie wiecej jak m razy
