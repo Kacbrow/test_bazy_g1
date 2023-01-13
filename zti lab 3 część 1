@@ -1,0 +1,25 @@
+# zad.1
+select pracownik.imie, pracownik.nazwisko, pracownik.data_urodzenia from pracownik;
+# zad.2
+select imie,nazwisko, (2023-year(data_urodzenia)) as wiek from pracownik;
+# zad.3 
+select d.nazwa,count(*) from dzial d join pracownik p on d.id_dzialu=p.dzial group by dzial;
+# zad.4
+select nazwa_kategori, count(id_towaru) from kategoria k join towar t on t.kategoria=k.id_kategori group by nazwa_kategori;
+# zad.5
+SELECT k.nazwa_kategori, group_concat(t.nazwa_towaru) FROM kategoria k JOIN towar t ON t.kategoria=k.id_kategori GROUP BY k.id_kategori;
+# zad.6
+SELECT ROUND(AVG(pensja),2) as 'srednie zarobki' FROM pracownik;
+# zad.7
+SELECT ROUND(AVG(pensja),2) as 'srednie zarobki' FROM pracownik WHERE (2023-YEAR(data_zatrudnienia))>=5;
+# zad.8
+Select t.nazwa_towaru, count(pz.towar) as ilosc from pozycja_zamowienia pz join towar t on pz.towar=t.id_towaru group by towar order by ilosc desc limit 10;
+# zad.9
+select z.numer_zamowienia, sum(pz.ilosc*pz.cena) as wartosc from pozycja_zamowienia pz join zamowienie z on 
+pz.zamowienie=z.id_zamowienia where year(z.data_zamowienia)=2017 and month(z.data_zamowienia) between 1 and 3 group by zamowienie;
+# zad.10
+select p.imie, p.nazwisko, sum(pz.ilosc*pz.cena) as wartosc from pracownik p join zamowienie z on p.id_pracownika=z.pracownik_id_pracownika 
+join pozycja_zamowienia pz on z.id_zamowienia=pz.zamowienie group by p.id_pracownika order by wartosc desc;
+
+# asc- rosnąco
+# desc - malejąco 
