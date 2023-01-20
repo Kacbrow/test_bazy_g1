@@ -1,0 +1,19 @@
+#zad.1
+Select d.nazwa ,min(p.pensja), max(p.pensja), round(avg(p.pensja),2) from pracownik p join dzial d on p.dzial=d.id_dzialu group by d.id_dzialu;
+#zad.2
+select kl.pelna_nazwa, sum(pz.ilosc*pz.cena) as wartosc from klient kl join zamowienie z on kl.id_klienta=z.klient
+join pozycja_zamowienia pz on z.id_zamowienia=pz.zamowienie group by kl.id_klienta order by wartosc desc limit 10;
+#zad.3
+Select year(z.data_zamowienia) as rok, round(sum(pz.ilosc*pz.cena),2) as wartosc from zamowienie z 
+join pozycja_zamowienia pz on z.id_zamowienia=pz.zamowienie group by rok order by wartosc desc;
+#zad.4
+SELECT round(sum(pz.ilosc*pz.cena),2) as 'wartosc' FROM zamowienie z JOIN status_zamowienia sz ON sz.id_statusu_zamowienia=z.status_zamowienia
+JOIN pozycja_zamowienia pz ON pz.zamowienie=z.id_zamowienia WHERE sz.nazwa_statusu_zamowienia="anulowane";
+#zad.7
+Select year(z.data_zamowienia) as rok, (sum(pz.ilosc*pz.cena)-(pz.ilosc*t.cena_zakupu)) as dochod from zamowienie z join pozycja_zamowienia pz 
+on z.id_zamowienia=pz.zamowienie join towar t on pz.towar=t.id_towaru where z.status_zamowienia=5 group by rok;
+# zad.9
+Select monthname(data_urodzenia) as miesiac, count(id_pracownika) as ilosc from pracownik 
+group by month(data_urodzenia) order by month(data_urodzenia) asc;
+# zad.10
+Select imie, nazwisko, (timestampdiff(month, data_zatrudnienia, now())*pensja) as ile from pracownik group by id_pracownika;
