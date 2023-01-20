@@ -53,6 +53,51 @@ select k.nazwa, if(count(u.id_uczestnika)>0, 'bral udział', 'nie bral udzialu')
 
 select * from wikingowie.uczestnicy;
 
+#zad4.1
+select length(nazwa) from wikingowie.kreatura;
+# krok 1 - wybranie tabel 
+#  krok 2 - złączenie tabel 
+# krok 3 - dodanie warunków filtrujących dane 
+# krok 4 - agregacja i grupowanie 
+# krok 5 - filtr po agregacji (having) i ewentualne sortowanie 
+
+select sum(length(dziennik)), nazwa from wyprawa w join etapy_wyprawy ew on ew.idWyprawy=w.id_wyprawy where length(ew.dziennik) < 400 group by ew.idWyprawy;
+Select w.nazwa, sum(length(ew.dziennik)) dlugosc from wyprawa w join etapy_wyprawy ew on w.id_wyprawy=ew.idWyprawy group by w.nazwa having dlugosc<400;
+ 
+# lub tak
+
+# lub tak
+select nazwa, sum(length(dziennik)) dlugosc from wyprawa w join etapy_wyprawy ew on ew.idWyprawy=w.id_wyprawy group by nazwa having dlugosc < 400;
+
+#zad.4.2
+# nazwa, srednio
+# 'Poszukiwanie ziecia', '14.000000'
+# 'Polowanie na tesciowa', '25.925000'
+# 'Nakarm kanibala', '15.020000'
+
+Select w.nazwa, ((sum(z.waga*e.ilosc))/(count(distinct(u.id_uczestnika)))) sr_waga from wyprawa w join uczestnicy u on w.id_wyprawy=u.id_wyprawy 
+join ekwipunek e on u.id_uczestnika=e.idKreatury join zasob z on e.idZasobu=z.idZasobu group by w.nazwa;
+
+# zad.5.1
+# użycie datediff()
+select datediff(now(), '2022-01-01') union select datediff('2022-01-01', now());
+
+select k.nazwa, w.nazwa, datediff(data_rozpoczecia, dataUr)from kreatura k join uczestnicy u ON u.id_uczestnika=k.idKreatury join wyprawa w
+ON w.id_wyprawy=u.id_wyprawy join etapy_wyprawy ew ON ew.idWyprawy=w.id_wyprawy join sektor s ON s.id_sektora=ew.sektor WHERE s.nazwa="Chatka dziadka";
+
+select k.nazwa, datediff(w.data_rozpoczecia, k.dataUr) tak, k.dataUr, w.data_rozpoczecia from kreatura k join uczestnicy u on k.idKreatury=u.id_uczestnika 
+join wyprawa w on u.id_wyprawy=w.id_wyprawy join etapy_wyprawy ew on u.id_wyprawy=ew.idWyprawy join sektor s on ew.sektor=s.id_sektora where s.nazwa = 'Chatka dziadka';
+
+#zad.4.2 poprawka 
+select w.nazwa, sum(e.ilosc * z.waga), count(distinct u.id_uczestnika),
+sum(e.ilosc * z.waga) / count(distinct u.id_uczestnika)
+from wyprawa w
+left join uczestnicy u on w.id_wyprawy=u.id_wyprawy
+left join ekwipunek e on u.id_uczestnika=e.idKreatury
+left join zasob z on e.idZasobu=z.idZasobu
+group by w.nazwa;
+
+
 
 # wejsciowka 
 # gr.4
